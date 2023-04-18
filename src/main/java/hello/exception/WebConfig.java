@@ -18,12 +18,13 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
-                .addPathPatterns("/*")
-                .excludePathPatterns("/css/**", "/*.ico", "/error");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**");// 오류 페이지 경로
+                                                                    // '/error-page/**' 없으면 내부 호출의 경우에도 인터셉터 호출됨.
     }
 
-    @Bean
-    public FilterRegistrationBean logFilter(){
+//    @Bean
+    public FilterRegistrationBean logFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new LogFilter());
         filterRegistrationBean.setOrder(1);
